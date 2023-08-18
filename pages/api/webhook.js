@@ -3,8 +3,7 @@ import { Order } from "@/models/Order";
 import { buffer } from "micro";
 const stripe = require("stripe")(process.env.STRIPE_SK);
 
-const endpointSecret =
-  "whsec_bf4ee3f692c8eb606dee6db2329eaae2108c374158623216b2a002c7ddbb230b";
+const endpointSecret = process.env.STRIPE_WH;
 
 export default async function handler(req, res) {
   await mongooseConnect();
@@ -49,6 +48,3 @@ export default async function handler(req, res) {
 export const config = {
   api: { bodyParser: false },
 };
-
-// refine-shiny-timely-pepped
-// acct_1Nd9B7Kb5o4AK2ug
