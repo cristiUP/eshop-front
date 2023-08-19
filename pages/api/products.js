@@ -21,7 +21,6 @@ export default async function handle(req, res) {
       productsQuery["properties." + filterName] = filters[filterName];
     });
   }
-  console.log(productsQuery);
   res.json(
     await Product.find(productsQuery, null, {
       sort: { [sortField]: sortOrder === "asc" ? 1 : -1 },

@@ -5,6 +5,7 @@ import { CartContext } from "./CartContext";
 import Center from "./Center";
 import BarsIcon from "./icons/Bars";
 import CartIcon from "./icons/CartIcon";
+import SearchIcon from "./icons/SearchIcon";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -25,6 +26,10 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
+`;
+const NavWrapper = styled.div`
+  display: flex;
+  gap: 20px;
 `;
 const StyledNav = styled.nav`
   ${(props) =>
@@ -54,21 +59,27 @@ const NavLink = styled(Link)`
   display: block;
   color: #aaa;
   text-decoration: none;
+
   padding: 10px 0;
+
   @media screen and (min-width: 768px) {
     padding: 0;
   }
 `;
 const NavButton = styled.button`
   background-color: transparent;
-  width: 30px;
-  height: 30px;
+  padding: 3px 0 0 0;
+  /* width: 30px;
+  height: 30px; */
   border: 0;
-  color: white;
+  color: #aaa;
   cursor: pointer;
   position: relative;
   z-index: 3;
-
+  svg {
+    width: 25px;
+    height: 25px;
+  }
   @media screen and (min-width: 768px) {
     display: none;
   }
@@ -92,10 +103,29 @@ const MobileCart = styled(Link)`
   cursor: pointer;
   position: relative;
   z-index: 3;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
   span {
     font-size: 0.87rem;
     font-weight: 400;
   }
+`;
+const SideIcons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+const SearchButton = styled(Link)`
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  color: #aaa;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
 `;
 
 export default function Header() {
@@ -106,21 +136,28 @@ export default function Header() {
       <Center>
         <Wrapper>
           <Logo href={"/"}>Ecommerce</Logo>
-          <StyledNav $navActive={navActive}>
-            <NavLink href={"/"}>Home</NavLink>
-            <NavLink href={"/products"}>All Products</NavLink>
-            <NavLink href={"/categories"}>Categories</NavLink>
-            {/* <NavLink href={"/account"}>Account</NavLink> */}
-            <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
-          </StyledNav>
-          <MobileNavigation>
-            <MobileCart href={"/cart"}>
-              <CartIcon /> <span>({cartProducts.length})</span>
-            </MobileCart>
-            <NavButton onClick={() => setNavActive((prev) => !prev)}>
-              <BarsIcon />
-            </NavButton>
-          </MobileNavigation>
+          <NavWrapper>
+            <StyledNav $navActive={navActive}>
+              <NavLink href={"/"}>Home</NavLink>
+              <NavLink href={"/products"}>All Products</NavLink>
+              <NavLink href={"/categories"}>Categories</NavLink>
+              {/* <NavLink href={"/account"}>Account</NavLink> */}
+              <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
+            </StyledNav>
+            <SideIcons>
+              <SearchButton href={"/search"}>
+                <SearchIcon />
+              </SearchButton>
+              <MobileNavigation>
+                <MobileCart href={"/cart"}>
+                  <CartIcon /> <span>({cartProducts.length})</span>
+                </MobileCart>
+                <NavButton onClick={() => setNavActive((prev) => !prev)}>
+                  <BarsIcon />
+                </NavButton>
+              </MobileNavigation>
+            </SideIcons>
+          </NavWrapper>
         </Wrapper>
       </Center>
     </StyledHeader>
