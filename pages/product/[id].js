@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import MainWrapper from "@/components/MainWrapper";
 import ProductImages from "@/components/ProductImages";
@@ -46,7 +47,11 @@ export default function ProductPage({ product }) {
             <PriceRow>
               <Price>${product.price}</Price>
 
-              <Button primary onClick={() => addProduct(product._id)}>
+              <Button
+                $primary="true"
+                $outline="true"
+                onClick={() => addProduct(product._id)}
+              >
                 <CartIcon />
                 Add to cart
               </Button>
@@ -54,6 +59,7 @@ export default function ProductPage({ product }) {
           </div>
         </ColWrapper>
       </Center>
+      <Footer />
     </MainWrapper>
   );
 }
