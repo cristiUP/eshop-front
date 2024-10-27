@@ -67,8 +67,13 @@ const CityHolder = styled.div`
 `;
 
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct, clearCart } =
-    useContext(CartContext);
+  const {
+    cartProducts,
+    addProduct,
+    removeProduct,
+    clearCart,
+    setCartProducts,
+  } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,6 +93,7 @@ export default function CartPage() {
     }
   }, [cartProducts]);
 
+  // Check for success state and clear cart if successful
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
@@ -96,14 +102,35 @@ export default function CartPage() {
       setIsSuccess(true);
       clearCart();
     }
-  }, []);
+  }, [clearCart, setCartProducts]);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        setCartProducts(JSON.parse(storedCart));
+      }
+    }
+  }, [setCartProducts]);
 
   function moreOfThisProduct(id) {
     addProduct(id);
   }
 
   function lessOfThisProduct(id) {
-    removeProduct(id);
+    const updatedCart = [...cartProducts];
+    const productIndex = updatedCart.findIndex((productId) => productId === id);
+    if (productIndex > -1) {
+      updatedCart.splice(productIndex, 1);
+      setCartProducts(updatedCart);
+
+      if (updatedCart.length === 0) {
+        localStorage.removeItem("cart");
+      } else {
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+      }
+    }
   }
 
   async function goToPayment() {

@@ -7,7 +7,7 @@ import ProductsGrid from "@/components/ProductsGrid";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { debounce } from "lodash";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const SearchInput = styled(Input)`
@@ -27,24 +27,47 @@ export default function SearchPage() {
   const [phrase, setPhrase] = useState("");
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const debouncedSearch = useCallback(debounce(searchProducts, 500), []);
+
   useEffect(() => {
+    const debouncedSearch = debounce((phrase) => {
+      axios
+        .get("/api/products?phrase=" + encodeURIComponent(phrase))
+        .then((response) => {
+          setProducts(response.data);
+          setIsLoading(false);
+        });
+    }, 500);
+
     if (phrase.length > 0) {
       setIsLoading(true);
       debouncedSearch(phrase);
     } else {
       setProducts([]);
     }
+    // Cleanup function to cancel the debounce if phrase changes
+    return () => {
+      debouncedSearch.cancel();
+    };
   }, [phrase]);
 
-  function searchProducts(phrase) {
-    axios
-      .get("/api/products?phrase=" + encodeURIComponent(phrase))
-      .then((response) => {
-        setProducts(response.data);
-        setIsLoading(false);
-      });
-  }
+  // const debouncedSearch = useCallback(debounce(searchProducts, 500), []);
+  // useEffect(() => {
+  //   if (phrase.length > 0) {
+  //     setIsLoading(true);
+  //     debouncedSearch(phrase);
+  //   } else {
+  //     setProducts([]);
+  //   }
+  // }, [phrase]);
+
+  // function searchProducts(phrase) {
+  //   axios
+  //     .get("/api/products?phrase=" + encodeURIComponent(phrase))
+  //     .then((response) => {
+  //       setProducts(response.data);
+  //       setIsLoading(false);
+  //     });
+  // }
   return (
     <MainWrapper>
       <Header />

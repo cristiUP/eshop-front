@@ -9,31 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.24.7",
-    "@babel/runtime": "^7.25.0",
-    "axios": "^1.7.3",
-    "eslint": "^9.8.0",
-    "eslint-config-next": "^14.2.5",
+    "axios": "^1.7.7",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
     "lodash": "^4.17.21",
     "micro": "^10.0.1",
-    "mongoose": "^8.5.2",
-    "next": "^14.2.5",
+    "mongoose": "^8.7.3",
+    "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
     "react-spinners": "^0.14.1",
-    "stripe": "^16.6.0",
-    "styled-components": "^6.1.12"
+    "stripe": "^17.2.1",
+    "styled-components": "^6.1.13"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^2.1.4"
-  },
-  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
-  "main": "next.config.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
